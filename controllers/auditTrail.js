@@ -1,4 +1,4 @@
-const AuditTrail = require("../models/auditTrail");
+const AuditTrail = require('../models/auditTrail');
 
 const auditTrailList = (req, res) => {
   AuditTrail.find()
@@ -8,7 +8,7 @@ const auditTrailList = (req, res) => {
       if (auditTrails) {
         return res.status(200).json(auditTrails);
       } else {
-        return res.status(404).json({ message: "auditTrails not found!" });
+        return res.status(404).json({ message: 'auditTrails not found!' });
       }
     })
     .catch((err) => {
@@ -27,7 +27,7 @@ const auditTrayReadOne = (req, res) => {
           auditTrail,
         });
       } else {
-        return res.status(404).json({ message: "auditTrail not found! " });
+        return res.status(404).json({ message: 'auditTrail not found!' });
       }
     })
     .catch((err) => {
@@ -45,25 +45,25 @@ const auditTrailCreate = (req, res) => {
       return res.status(201).json(invest);
     })
     .catch((err) => {
-      console.log(`Error creating auditTrail: ${err.message}`);
+        res.status(500).json({ error: err });
     });
 };
 
 const auditTrailUpdate = (req, res) => {
   const auditTrailid = req.param.id;
   if (!auditTrailid) {
-    return res.status(404).json({ message: "auditTrail not found!" });
+    return res.status(404).json({ message: 'auditTrail not found!' });
   }
   auditTrail
     .findByIdAndUpdate({
       auditTrailid,
       $set: {
         activity: req.body.activity,
-      },
+      }
     })
     .then((auditTrail) => {
       return res.status(200).json({
-        message: "Updated successfully!",
+        message: 'Updated successfully!',
         data: auditTrail,
       });
     })
@@ -75,12 +75,12 @@ const auditTrailUpdate = (req, res) => {
 const auditTrailDelete = (req, res, next) => {
   const auditTrailId = req.param.id;
   if (!auditTrailId) {
-    return res.status(404).json({ message: "auditTrail not found!" });
+    return res.status(404).json({ message: 'auditTrail not found!' });
   }
   auditTrail
     .findByIdAndRemove(auditTrailId)
     .then(() => {
-      res.status(200).json({ message: "successfully deleted the auditTrail" });
+      res.status(200).json({ message: 'successfully deleted the auditTrail' });
       next();
     })
     .catch((err) => {

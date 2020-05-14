@@ -1,4 +1,4 @@
-const Business = require("../models/investee");
+const Business = require('../models/business');
 
 const businessList = (req, res) => {
   Business.find()
@@ -8,7 +8,7 @@ const businessList = (req, res) => {
       if (businesses) {
         return res.status(200).json(businesses);
       } else {
-        return res.status(404).json({ message: "businesss not found!" });
+        return res.status(404).json({ message: 'businesss not found!' });
       }
     })
     .catch((err) => {
@@ -26,7 +26,7 @@ const businessReadOne = (req, res) => {
       if (business) {
         return res.status(200).json(business);
       } else {
-        return res.status(404).json({ message: "business not found! " });
+        return res.status(404).json({ message: 'business not found! ' });
       }
     })
     .catch((err) => {
@@ -64,7 +64,7 @@ const businessCreate = (req, res) => {
 const businessUpdate = (req, res) => {
   const businessid = req.param.id;
   if (!businessid) {
-    return res.status(404).json({ message: "Business not found!" });
+    return res.status(404).json({ message: 'Business not found!' });
   }
   business
     .findByIdAndUpdate({
@@ -80,12 +80,12 @@ const businessUpdate = (req, res) => {
         status: req.body.status,
         goal: req.body.goal,
         deadline: req.body.deadline,
-        validated: req.body.validated,
-      },
+        validated: req.body.validated
+      }
     })
     .then((business) => {
       return res.status(200).json({
-        message: "Update successfully",
+        message: 'Update successfully',
         data: business,
       });
     })
@@ -96,10 +96,10 @@ const businessUpdate = (req, res) => {
 
 const businessDelete = (req, res, next) => {
   const businessid = req.param.id;
-  business
+  Business
     .findByIdAndRemove(businessid)
     .then(() => {
-      res.status(200).json({ message: "successfully deleted the business" });
+      res.status(200).json({ message: 'successfully deleted the business' });
       next();
     })
     .catch((err) => {

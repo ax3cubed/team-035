@@ -1,14 +1,14 @@
-const Investor = require("../models/Investor");
+const Investor = require('../models/Investor');
 
 const investorList = (req, res) => {
   Investor.find()
-    .populate("user")
+    .populate('user')
     .exec()
     .then((investors) => {
       if (investors) {
         return res.status(200).json(investors);
       } else {
-        return res.status(404).json({ message: "investors not found!" });
+        return res.status(404).json({ message: 'investors not found!' });
       }
     })
     .catch((err) => {
@@ -19,13 +19,13 @@ const investorList = (req, res) => {
 const investorReadOne = (req, res) => {
   const investorid = req.param.id;
   Investor.findById(investorid)
-    .populate("user")
+    .populate('user')
     .exec()
     .then((investor) => {
       if (investor) {
         res.status(200).json({ data: investor });
       } else {
-        return res.status(404).json({ message: "investor not found! " });
+        return res.status(404).json({ message: 'investor not found! ' });
       }
     })
     .catch((err) => {
@@ -44,7 +44,7 @@ const investorCreate = (req, res) => {
       return res.status(201).json({ data: investor });
     })
     .catch((err) => {
-      console.log(`Error creating investor: ${err.message}`);
+        res.status(500).json({ error: err });
     });
 };
 
@@ -61,22 +61,18 @@ const investorUpdate = (req, res) => {
       screen: req.body.screen,
     },
   })
-    .then((investor) => {
-      return res.status(200).json({ data: investor });
-    })
-    .catch((err) => {
-      console.log(`Error updating investor: ${err.message}`);
-    });
+    .then((investor) => { return res.status(200).json({ data: investor }); })
+    .catch((err) => res.status(500).json({ error: err }) );
 };
 
 const investorDelete = (req, res, next) => {
   const investorid = req.param.id;
   if (!investorid) {
-    return res.status(404).json({ message: "investor not found!" });
+    return res.status(404).json({ message: 'investor not found!' });
   }
   Investor.findByIdAndRemove(investorid)
     .then(() => {
-      res.status(200).json({ message: "successfully deleted the investor" });
+      res.status(200).json({ message: 'successfully deleted the investor' });
       next();
     })
     .catch((err) => {
@@ -89,5 +85,5 @@ module.exports = {
   investorReadOne,
   investorCreate,
   investorUpdate,
-  investorDelete,
+  investorDelete
 };

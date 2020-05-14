@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require('../models/User');
 
 const userList = (req, res) => {
   User.find()
@@ -7,7 +7,7 @@ const userList = (req, res) => {
       if (users) {
         return res.status(200).json({ data: users });
       } else {
-        return res.status(404).json({ message: "users not found!" });
+        return res.status(404).json({ message: 'users not found!' });
       }
     })
     .catch((err) => {
@@ -23,7 +23,7 @@ const userReadOne = (req, res) => {
       if (user) {
         res.status(200).json({ data: user });
       } else {
-        return res.status(404).json({ message: "user not found! " });
+        return res.status(404).json({ message: 'user not found!' });
       }
     })
     .catch((err) => {
@@ -43,14 +43,14 @@ const userCreate = (req, res) => {
       return res.status(201).json({ data: user });
     })
     .catch((err) => {
-      console.log(`Error creating user: ${err.message}`);
+      res.status(500).json({ error: err });
     });
 };
 
 const userUpdate = (req, res) => {
   const userid = req.param.id;
   if (!userid) {
-    return res.status(404).json({ message: "user not found!" });
+    return res.status(404).json({ message: 'user not found!' });
   }
   user
     .findByIdAndUpdate({
@@ -65,7 +65,7 @@ const userUpdate = (req, res) => {
     })
     .then((user) => {
       return res.status(200).json({
-        message: "Updated successfully!",
+        message: 'Updated successfully!',
         data: user,
       });
     })
@@ -77,12 +77,12 @@ const userUpdate = (req, res) => {
 const userDelete = (req, res, next) => {
   const userId = req.param.id;
   if (!userId) {
-    return res.status(404).json({ message: "user not found!" });
+    return res.status(404).json({ message: 'user not found!' });
   }
   user
     .findByIdAndRemove(userId)
     .then(() => {
-      res.status(200).json({ message: "successfully deleted the user" });
+      res.status(200).json({ message: 'successfully deleted the user' });
       next();
     })
     .catch((err) => {
