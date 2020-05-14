@@ -2,7 +2,7 @@ const AuditTrail = require('../models/auditTrail');
 
 const auditTrailList = (req, res) => {
   AuditTrail.find()
-    .populate("user")
+    .populate('user')
     .exec()
     .then((auditTrails) => {
       if (auditTrails) {
@@ -19,7 +19,7 @@ const auditTrailList = (req, res) => {
 const auditTrayReadOne = (req, res) => {
   const auditTrailId = req.param.id;
   AuditTrail.findById(auditTrailId)
-    .populate("user")
+    .populate('user')
     .exec()
     .then((auditTrail) => {
       if (auditTrail) {
@@ -36,17 +36,13 @@ const auditTrayReadOne = (req, res) => {
 };
 
 const auditTrailCreate = (req, res) => {
-  auditTrail
+  AuditTrail
     .create({
       user: user._id,
       activity: req.body.activity,
     })
-    .then((invest) => {
-      return res.status(201).json(invest);
-    })
-    .catch((err) => {
-        res.status(500).json({ error: err });
-    });
+    .then((auditTrail) => { return res.status(201).json({ data: auditTrail }); })
+    .catch((err) => res.status(500).json({ error: err }) );
 };
 
 const auditTrailUpdate = (req, res) => {
@@ -54,17 +50,17 @@ const auditTrailUpdate = (req, res) => {
   if (!auditTrailid) {
     return res.status(404).json({ message: 'auditTrail not found!' });
   }
-  auditTrail
+  AuditTrail
     .findByIdAndUpdate({
       auditTrailid,
       $set: {
-        activity: req.body.activity,
+        activity: req.body.activity
       }
     })
     .then((auditTrail) => {
       return res.status(200).json({
         message: 'Updated successfully!',
-        data: auditTrail,
+        data: auditTrail
       });
     })
     .catch((err) => {
@@ -72,16 +68,15 @@ const auditTrailUpdate = (req, res) => {
     });
 };
 
-const auditTrailDelete = (req, res, next) => {
+const auditTrailDelete = (req, res) => {
   const auditTrailId = req.param.id;
   if (!auditTrailId) {
     return res.status(404).json({ message: 'auditTrail not found!' });
   }
-  auditTrail
+  AuditTrail
     .findByIdAndRemove(auditTrailId)
     .then(() => {
-      res.status(200).json({ message: 'successfully deleted the auditTrail' });
-      next();
+      return res.status(200).json({ message: 'successfully deleted the auditTrail' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -93,5 +88,5 @@ module.exports = {
   auditTrayReadOne,
   auditTrailCreate,
   auditTrailUpdate,
-  auditTrailDelete,
+  auditTrailDelete
 };

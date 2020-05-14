@@ -5,11 +5,10 @@ const milestoneReportList = (req, res) => {
     .populate('milestoneID')
     .exec()
     .then((milestoneReports) => {
-      if (milestoneReports) {
-        return res.status(200).json(milestoneReports);
-      } else {
+      if (!milestoneReports) {
         return res.status(404).json({ message: 'milestoneReports not found!' });
-      }
+      } 
+      return res.status(200).json(milestoneReports);
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -38,12 +37,12 @@ const milestoneReportReadOne = (req, res) => {
 const milestoneReportCreate = (req, res) => {
   MilestoneReport.create({
     milestone: milestoneID._id,
-    prof: req.body.prof,
+    prof: req.body.prof
   })
-    .then((invest) => {
-      return res.status(201).json(invest);
-    })
-    .catch((err) => res.status(500).json({ error: err }) );
+    .then((milestoneReport) => { return res.status(201).json({ data: milestoneReport }); })
+    .catch((err) => {
+        res.status(500).json({ error: err }) 
+    });
 };
 
 const milestoneReportUpdate = (req, res) => {
@@ -54,8 +53,8 @@ const milestoneReportUpdate = (req, res) => {
   MilestoneReport.findByIdAndUpdate({
     milestoneReportid,
     $set: {
-      proof: req.body.proof,
-    },
+      proof: req.body.proof
+    }
   })
     .then((milestoneReport) => {
       return res.status(200).json({
@@ -75,10 +74,7 @@ const milestoneReportDelete = (req, res, next) => {
   }
   MilestoneReport.findByIdAndRemove(milestoneReportId)
     .then(() => {
-      res
-        .status(200)
-        .json({ message: 'successfully deleted the milestoneReport' });
-      next();
+      return res.status(200).json({ message: 'successfully deleted the milestoneReport' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });

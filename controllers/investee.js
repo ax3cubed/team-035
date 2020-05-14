@@ -1,4 +1,4 @@
-const Investee = require("../models/investee");
+const Investee = require('../models/investee');
 
 const investList = (req, res,) => {
   Investee.find()
@@ -23,9 +23,7 @@ const investReadOne = (req, res) => {
     .exec()
     .then((investee) => {
       if (investee) {
-        res.status(200).json({
-          investee,
-        });
+        return res.status(200).json({ data: investee });
       } else {
         return res.status(404).json({ message: 'Investee not found! ' });
       }

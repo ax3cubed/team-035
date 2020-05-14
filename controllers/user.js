@@ -4,11 +4,10 @@ const userList = (req, res) => {
   User.find()
     .exec()
     .then((users) => {
-      if (users) {
-        return res.status(200).json({ data: users });
-      } else {
+      if (!users) {
         return res.status(404).json({ message: 'users not found!' });
-      }
+      } 
+      return res.status(200).json({ data: users });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -20,11 +19,10 @@ const userReadOne = (req, res) => {
   User.findById(userId)
     .exec()
     .then((user) => {
-      if (user) {
-        res.status(200).json({ data: user });
-      } else {
+      if (!user) {
         return res.status(404).json({ message: 'user not found!' });
-      }
+      } 
+      return res.status(200).json({ data: user });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -37,11 +35,9 @@ const userCreate = (req, res) => {
     lastname: req.body.lastName,
     phone: req.body.phoneNumber,
     account: req.body.accountType,
-    password: req.body.password,
+    password: req.body.password
   })
-    .then((user) => {
-      return res.status(201).json({ data: user });
-    })
+    .then((user) => { return res.status(201).json({ data: user }); })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
@@ -52,7 +48,7 @@ const userUpdate = (req, res) => {
   if (!userid) {
     return res.status(404).json({ message: 'user not found!' });
   }
-  user
+  User
     .findByIdAndUpdate({
       userid,
       $set: {
@@ -60,13 +56,13 @@ const userUpdate = (req, res) => {
         lastname: req.body.lastName,
         phone: req.body.phoneNumber,
         account: req.body.accountType,
-        password: req.body.password,
-      },
+        password: req.body.password
+      }
     })
     .then((user) => {
       return res.status(200).json({
         message: 'Updated successfully!',
-        data: user,
+        data: user
       });
     })
     .catch((err) => {
@@ -79,11 +75,10 @@ const userDelete = (req, res, next) => {
   if (!userId) {
     return res.status(404).json({ message: 'user not found!' });
   }
-  user
+  User
     .findByIdAndRemove(userId)
     .then(() => {
-      res.status(200).json({ message: 'successfully deleted the user' });
-      next();
+      return res.status(200).json({ message: 'successfully deleted the user' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -95,5 +90,5 @@ module.exports = {
   userReadOne,
   userCreate,
   userUpdate,
-  userDelete,
+  userDelete
 };

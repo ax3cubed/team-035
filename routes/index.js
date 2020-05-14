@@ -12,7 +12,6 @@ const ctrlMilestoneValidation = require('../controller/milestoneValidation');
 const ctrlTransaction = require('../controller/transaction');
 const ctrlSetting = require('../controller/setting');
 
-// Investee router
 router
   .route('invest')
   .get(ctrlInvestee.investList)
@@ -24,7 +23,6 @@ router
   .put(ctrlInvestee.investeeUpdate)
   .delete(ctrlInvestee.investDelete);
 
-// Investor router
 router
   .route('investor')
   .get(ctrlInvestor.investorList)
@@ -36,7 +34,6 @@ router
   .put(ctrlInvestor.investorUpdate)
   .delete(ctrlInvestor.investorDelete);
 
-// AuditTrail router
 router
   .route('audit')
   .get(ctrlAuditTrail.auditTrailList)
@@ -48,7 +45,6 @@ router
   .put(ctrlAuditTrail.auditTrailUpdate)
   .delete(ctrlAuditTrail.auditTrailDelete);
 
-// Business router
 router
   .route('business')
   .get(ctrlBusiness.businessList)
@@ -60,7 +56,6 @@ router
   .put(ctrlBusiness.businessUpdate)
   .delete(ctrlBusiness.businessDelete);
 
-// Transaction router
 router
   .route('transaction')
   .get(ctrlTransaction.transactionList)
@@ -72,7 +67,6 @@ router
   .put(ctrlTransaction.transactionUpdate)
   .delete(ctrlTransaction.transactionDelete);
 
-// Milestone router
 router
   .route('milestone')
   .get(ctrlMilestone.milestoneList)
@@ -84,7 +78,6 @@ router
   .put(ctrlMilestone.milestoneUpdate)
   .delete(ctrlMilestone.milestoneDelete);
 
-// Milestonereport router
 router
   .route('milestonereport')
   .get(ctrlMilestoneReport.milestoneReportList)
@@ -96,7 +89,6 @@ router
   .put(ctrlMilestoneReport.milestoneReportUpdate)
   .delete(ctrlMilestoneReport.milestoneReportDelete);
 
-// Milestonevalidation router
 router
   .route('milestonevalidation')
   .get(ctrlMilestoneValidation.milestoneValidationList)
@@ -108,7 +100,6 @@ router
   .put(ctrlMilestoneValidation.milestoneValidationUpdate)
   .delete(ctrlMilestoneValidation.milestoneValidationDelete);
 
-// Setting router
 router.route('setting').post(ctrlSetting.settingCreate);
 
 router
@@ -116,14 +107,13 @@ router
   .put(ctrlSetting.settingUpdate)
   .delete(ctrlSetting.settingDelete);
 
-// User sign up and sign in
 router.post(
   'auth/register',
   (req, res, next) => {
     auth.register(req, res, next);
   },
   (req, res, next) => {
-    auth.signIn;
+    auth.signIn();
     next();
   },
   auth.signJWTForUser
@@ -131,7 +121,6 @@ router.post(
 
 router.post('auth', auth.signIn, auth.signJWTForUser);
 
-//User list router
 router
   .route('user')
   .get(auth.validateJWTWithPassportJWT, ctrlUser.userList)

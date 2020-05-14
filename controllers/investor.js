@@ -5,11 +5,10 @@ const investorList = (req, res) => {
     .populate('user')
     .exec()
     .then((investors) => {
-      if (investors) {
-        return res.status(200).json(investors);
-      } else {
+      if (!investors) {
         return res.status(404).json({ message: 'investors not found!' });
       }
+      return res.status(200).json({ data: investors }); 
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -22,11 +21,10 @@ const investorReadOne = (req, res) => {
     .populate('user')
     .exec()
     .then((investor) => {
-      if (investor) {
-        res.status(200).json({ data: investor });
-      } else {
-        return res.status(404).json({ message: 'investor not found! ' });
-      }
+      if (!investor) {
+        return res.status(404).json({ message: 'investor not found! ' });        
+      } 
+      return res.status(200).json({ data: investor });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -38,7 +36,7 @@ const investorCreate = (req, res) => {
     userID: user._id,
     preference: req.body.investmentPreference,
     account: req.body.investmentAccountType,
-    screen: req.body.screen,
+    screen: req.body.screen
   })
     .then((investor) => {
       return res.status(201).json({ data: investor });
@@ -58,11 +56,11 @@ const investorUpdate = (req, res) => {
     $set: {
       preference: req.body.investmentPreference,
       account: req.body.investmentAccountType,
-      screen: req.body.screen,
-    },
+      screen: req.body.screen
+    }
   })
     .then((investor) => { return res.status(200).json({ data: investor }); })
-    .catch((err) => res.status(500).json({ error: err }) );
+    .catch((err) => res.status(500).json({ error: err }));
 };
 
 const investorDelete = (req, res, next) => {
@@ -72,7 +70,7 @@ const investorDelete = (req, res, next) => {
   }
   Investor.findByIdAndRemove(investorid)
     .then(() => {
-      res.status(200).json({ message: 'successfully deleted the investor' });
+      return res.status(200).json({ message: 'successfully deleted the investor' });
       next();
     })
     .catch((err) => {

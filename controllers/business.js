@@ -2,7 +2,7 @@ const Business = require('../models/business');
 
 const businessList = (req, res) => {
   Business.find()
-    .populate("investId")
+    .populate('investId')
     .exec()
     .then((businesses) => {
       if (businesses) {
@@ -20,7 +20,7 @@ const businessReadOne = (req, res) => {
   const businessid = req.param.id;
   business
     .findById(businessid)
-    .populate("investId")
+    .populate('investId')
     .exec()
     .then((business) => {
       if (business) {
@@ -43,7 +43,7 @@ const businessCreate = (req, res) => {
       category: req.body.businessCategory,
       location: req.body.preferredLocation,
       amount: req.body.requiredAmount,
-      media: req.body.mediaURLs.split(" "),
+      media: req.body.mediaURLs.split(''),
       video: req.body.videoURL,
       status: req.body.status,
       goal: req.body.goal,
@@ -52,12 +52,12 @@ const businessCreate = (req, res) => {
     })
     .then((business) => {
       return res.status(201).json({
-        message: "Created successfully",
-        data: business,
+        message: 'Created successfully',
+        data: business
       });
     })
     .catch((err) => {
-      console.log(`Error creating business: ${err.message}`);
+      res.status(500).json({ error: err });
     });
 };
 
@@ -83,24 +83,16 @@ const businessUpdate = (req, res) => {
         validated: req.body.validated
       }
     })
-    .then((business) => {
-      return res.status(200).json({
-        message: 'Update successfully',
-        data: business,
-      });
-    })
-    .catch((err) => {
-      console.log(`Error updating business: ${err.message}`);
-    });
+    .then((business) => { return res.status(200).json({message: 'Update successfully',data: business}); })
+    .catch((err) => res.status(500).json({ error: err }) );
 };
 
-const businessDelete = (req, res, next) => {
+const businessDelete = (req, res) => {
   const businessid = req.param.id;
   Business
     .findByIdAndRemove(businessid)
     .then(() => {
-      res.status(200).json({ message: 'successfully deleted the business' });
-      next();
+      return res.status(200).json({ message: 'successfully deleted the business' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -112,5 +104,5 @@ module.exports = {
   businessReadOne,
   businessCreate,
   businessUpdate,
-  businessDelete,
+  businessDelete
 };

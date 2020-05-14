@@ -4,7 +4,7 @@ const settingCreate = (req, res) => {
   Setting.create({
     user: user._id,
     optionKey: req.body.optionKey,
-    value: req.body.value,
+    value: req.body.value
   })
     .then((setting) => {
       return res.status(201).json({
@@ -40,7 +40,7 @@ const settingUpdate = (req, res) => {
     });
 };
 
-const settingDelete = (req, res, next) => {
+const settingDelete = (req, res) => {
   const settingId = req.param.id;
   if (!settingId) {
     return res.status(404).json({ message: 'setting not found!' });
@@ -48,7 +48,6 @@ const settingDelete = (req, res, next) => {
   Setting.findByIdAndRemove(settingId)
     .then(() => {
       return res.status(200).json({ message: 'successfully deleted the setting' });
-      next();
     })
     .catch((err) => {
       res.status(500).json({ error: err });
