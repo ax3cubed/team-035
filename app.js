@@ -16,7 +16,6 @@ app.use(authMiddleware.initialize);
 // app.use('/users', usersRouter);
 // app.use('/contracts', contractsRouter);
 
-
 app.use('/', indexRouter)
 
 

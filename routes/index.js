@@ -3,6 +3,7 @@ const router = require('express').Router();
 const auth = require('../middleware/auth');
 const ctrlUser = require('../controllers/user');
 const ctrlInvestee = require('../controllers/investee');
+const ctrlInvestor = require('../controllers/investor');
 const ctrlAuditTrail = require('../controllers/auditTrail');
 const ctrlBusiness = require('../controllers/business');
 const ctrlMilestone = require('../controllers/milestones');
@@ -24,6 +25,17 @@ router
     .put(ctrlInvestee.investeeUpdate)
     .delete(ctrlInvestee.investDelete);
 
+// Investor router
+router
+    .route('investor')
+    .get(ctrlInvestor.investorList)
+    .post(ctrlInvestor.investorCreate);
+
+router
+    .route('/investor/:investorid')
+    .get(ctrlInvestor.investorReadOne)
+    .put(ctrlInvestor.investorUpdate)
+    .delete(ctrlInvestor.investorDelete);
 
 // AuditTrail router
 router
