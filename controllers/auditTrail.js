@@ -1,20 +1,20 @@
 const AuditTrail = require('../models/auditTrail');
 
 const auditTrailList = (req, res) => {
-    AuditTrail.find()
-        .populate('user')
-        .exec()
-        .then((auditTrails) => {
-            if(auditTrails){
-                return res.status(200)
-                    .json(auditTrails)
-            }else{
-                return res.status(404)
-                .json({ message: "auditTrails not found!" })
-            }
-        })
-        .catch((err) => {
-            res.status(500).json({ error: err });
+  AuditTrail.find()
+    .populate('user')
+    .exec()
+    .then((auditTrails) => {
+      if(auditTrails){
+        return res.status(200)
+          .json(auditTrails)
+      } else {
+        return res.status(404)
+          .json({ message: "auditTrails not found!" })
+      }
+    })
+    .catch((err) => {
+        res.status(500).json({ error: err });
      });
 }
 
