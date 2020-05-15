@@ -6,13 +6,10 @@ const milestoneValidationList = (req, res) => {
     .populate('milestoneReport')
     .exec()
     .then((milestoneValidations) => {
-      if (milestoneValidations) {
-        return res.status(200).json(milestoneValidations);
-      } else {
-        return res
-          .status(404)
-          .json({ message: 'milestoneValidations not found!' });
-      }
+      if (!milestoneValidations) {
+        return res.status(404).json({ message: 'milestoneValidations not found!' });
+      } 
+      return res.status(200).json(milestoneValidations);
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -30,7 +27,6 @@ const milestoneReadOne = (req, res) => {
         return res.status(404).json({ message: 'milestoneValidation not found!' });
       } 
       return res.status(200).json({ data: milestoneValidation });
-
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -39,7 +35,7 @@ const milestoneReadOne = (req, res) => {
 
 const milestoneValidationCreate = (req, res) => {
   MilestoneValidation.create({
-    userid: validator._id,
+    // userid: validator._id,
     milestonereportid: milestoneReport._id,
     remark: req.body.remark,
     verdict: req.body.verdict
@@ -48,7 +44,7 @@ const milestoneValidationCreate = (req, res) => {
       return res.status(201).json({ data: validation });
     })
     .catch((err) => {
-        res.status(500).json({ error: err }) 
+      res.status(500).json({ error: err }) 
     });
 };
 
@@ -62,9 +58,10 @@ const milestoneValidationUpdate = (req, res) => {
     $set: {
       remark: req.body.remark,
       verdict: req.body.verdict
-    },
+    }
   })
-    .then((milestoneValidation) => { return res.status(200).json({
+    .then((milestoneValidation) => { 
+      return res.status(200).json({
         message: 'Updated successfully!',
         data: milestoneValidation
       });

@@ -6,8 +6,7 @@ const investorList = (req, res) => {
     .exec()
     .then((investors) => {
       if (!investors) {
-        return res.status(404).json({ message: 'investors not found!' });
-      }
+        return res.status(404).json({ message: 'investors not found!' });}
       return res.status(200).json({ data: investors }); 
     })
     .catch((err) => {
@@ -22,8 +21,7 @@ const investorReadOne = (req, res) => {
     .exec()
     .then((investor) => {
       if (!investor) {
-        return res.status(404).json({ message: 'investor not found! ' });        
-      } 
+        return res.status(404).json({ message: 'investor not found! ' });        } 
       return res.status(200).json({ data: investor });
     })
     .catch((err) => {
@@ -42,7 +40,7 @@ const investorCreate = (req, res) => {
       return res.status(201).json({ data: investor });
     })
     .catch((err) => {
-        res.status(500).json({ error: err });
+      res.status(500).json({ error: err });
     });
 };
 
@@ -59,11 +57,12 @@ const investorUpdate = (req, res) => {
       screen: req.body.screen
     }
   })
-    .then((investor) => { return res.status(200).json({ data: investor }); })
+    .then((investor) => { return res.status(200)
+        .json({ data: investor }); })
     .catch((err) => res.status(500).json({ error: err }));
 };
 
-const investorDelete = (req, res, next) => {
+const investorDelete = (req, res) => {
   const investorid = req.param.id;
   if (!investorid) {
     return res.status(404).json({ message: 'investor not found!' });
@@ -71,7 +70,6 @@ const investorDelete = (req, res, next) => {
   Investor.findByIdAndRemove(investorid)
     .then(() => {
       return res.status(200).json({ message: 'successfully deleted the investor' });
-      next();
     })
     .catch((err) => {
       res.status(500).json({ error: err });

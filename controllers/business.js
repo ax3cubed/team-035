@@ -5,11 +5,11 @@ const businessList = (req, res) => {
     .populate('investId')
     .exec()
     .then((businesses) => {
-      if (businesses) {
-        return res.status(200).json(businesses);
-      } else {
+      if (!businesses) {
         return res.status(404).json({ message: 'businesss not found!' });
-      }
+      } 
+      return res.status(200).json(businesses);
+
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -37,7 +37,7 @@ const businessReadOne = (req, res) => {
 const businessCreate = (req, res) => {
   business
     .create({
-      investid: investeeId._id,
+    //   investid: investeeId._id,
       businessTitle: req.body.businessTitle,
       description: req.body.businessDescription,
       category: req.body.businessCategory,
@@ -48,13 +48,9 @@ const businessCreate = (req, res) => {
       status: req.body.status,
       goal: req.body.goal,
       deadline: req.body.deadline,
-      validated: req.body.validated,
+      validated: req.body.validated
     })
-    .then((business) => {
-      return res.status(201).json({
-        message: 'Created successfully',
-        data: business
-      });
+    .then((business) => { return res.status(201).json({ message: 'Created successfully',data: business });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -66,7 +62,7 @@ const businessUpdate = (req, res) => {
   if (!businessid) {
     return res.status(404).json({ message: 'Business not found!' });
   }
-  business
+  Business
     .findByIdAndUpdate({
       businessid,
       $set: {
@@ -75,7 +71,7 @@ const businessUpdate = (req, res) => {
         category: req.body.businessCategory,
         location: req.body.preferredLocation,
         amount: req.body.requiredAmount,
-        media: req.body.mediaURLs.split(" "),
+        media: req.body.mediaURLs,
         video: req.body.videoURL,
         status: req.body.status,
         goal: req.body.goal,
@@ -83,16 +79,17 @@ const businessUpdate = (req, res) => {
         validated: req.body.validated
       }
     })
-    .then((business) => { return res.status(200).json({message: 'Update successfully',data: business}); })
-    .catch((err) => res.status(500).json({ error: err }) );
+    .then((business) => { return res.status(200).json({message: 'Update successfully', data: business }); })
+    .catch((err) => {
+        res.status(500).json({ error: err }) 
+    });
 };
 
 const businessDelete = (req, res) => {
   const businessid = req.param.id;
   Business
     .findByIdAndRemove(businessid)
-    .then(() => {
-      return res.status(200).json({ message: 'successfully deleted the business' });
+    .then(() => { return res.status(200).json({ message: 'successfully deleted the business' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });

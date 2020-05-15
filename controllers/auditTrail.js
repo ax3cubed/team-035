@@ -5,11 +5,11 @@ const auditTrailList = (req, res) => {
     .populate('user')
     .exec()
     .then((auditTrails) => {
-      if (auditTrails) {
-        return res.status(200).json(auditTrails);
-      } else {
+      if (!auditTrails) {
         return res.status(404).json({ message: 'auditTrails not found!' });
-      }
+      } 
+      return res.status(200).json(auditTrails);
+
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -22,13 +22,10 @@ const auditTrayReadOne = (req, res) => {
     .populate('user')
     .exec()
     .then((auditTrail) => {
-      if (auditTrail) {
-        res.status(200).json({
-          auditTrail,
-        });
-      } else {
+      if (!auditTrail) {
         return res.status(404).json({ message: 'auditTrail not found!' });
-      }
+      } 
+      return res.status(200).json({ data: auditTrail });
     })
     .catch((err) => {
       res.status(500).json({ error: err });

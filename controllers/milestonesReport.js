@@ -21,27 +21,25 @@ const milestoneReportReadOne = (req, res) => {
     .populate('milestoneID')
     .exec()
     .then((milestoneReport) => {
-      if (milestoneReport) {
-        return res.status(200).json({
-          milestoneReport,
-        });
-      } else {
-        return res.status(404).json({ message: 'milestoneReport not found! ' });
-      }
+      if (!milestoneReport) {
+        return res.status(404).json({ message: 'milestoneReport not found! ' })
+      } 
+      return res.status(200).json({milestoneReport })
     })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
 };
 
+
 const milestoneReportCreate = (req, res) => {
   MilestoneReport.create({
-    milestone: milestoneID._id,
+    // milestone: milestoneID._id,
     prof: req.body.prof
   })
     .then((milestoneReport) => { return res.status(201).json({ data: milestoneReport }); })
     .catch((err) => {
-        res.status(500).json({ error: err }) 
+      res.status(500).json({ error: err }) 
     });
 };
 
@@ -56,8 +54,7 @@ const milestoneReportUpdate = (req, res) => {
       proof: req.body.proof
     }
   })
-    .then((milestoneReport) => {
-      return res.status(200).json({
+    .then((milestoneReport) => { return res.status(200).json({
         message: 'Updated successfully!',
         data: milestoneReport
       });
@@ -67,14 +64,14 @@ const milestoneReportUpdate = (req, res) => {
     });
 };
 
-const milestoneReportDelete = (req, res, next) => {
+const milestoneReportDelete = (req, res) => {
   const milestoneReportId = req.param.id;
   if (!milestoneReportId) {
     return res.status(404).json({ message: 'milestoneReport not found!' });
   }
   MilestoneReport.findByIdAndRemove(milestoneReportId)
-    .then(() => {
-      return res.status(200).json({ message: 'successfully deleted the milestoneReport' });
+    .then(() => { return res.status(200)
+        .json({ message: 'successfully deleted the milestoneReport' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });

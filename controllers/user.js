@@ -37,7 +37,8 @@ const userCreate = (req, res) => {
     account: req.body.accountType,
     password: req.body.password
   })
-    .then((user) => { return res.status(201).json({ data: user }); })
+    .then((user) => { return res.status(201)
+        .json({ data: user }); })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
@@ -59,9 +60,8 @@ const userUpdate = (req, res) => {
         password: req.body.password
       }
     })
-    .then((user) => {
-      return res.status(200).json({
-        message: 'Updated successfully!',
+    .then((user) => { return res.status(200)
+        .json({ message: 'Updated successfully!',
         data: user
       });
     })
@@ -70,7 +70,7 @@ const userUpdate = (req, res) => {
     });
 };
 
-const userDelete = (req, res, next) => {
+const userDelete = (req, res) => {
   const userId = req.param.id;
   if (!userId) {
     return res.status(404).json({ message: 'user not found!' });

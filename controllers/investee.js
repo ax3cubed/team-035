@@ -5,11 +5,10 @@ const investList = (req, res,) => {
     .populate('user')
     .exec()
     .then((investees) => {
-      if (investees) {
-        return res.status(200).json(investees);
-      } else {
-        return res.status(404).json({ message: 'Investees not found!' });
-      }
+      if (!investees) {
+        return res.status(404).json({ message: 'Investees not found!' });  
+      } 
+      return res.status(200).json(investees);
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -22,11 +21,10 @@ const investReadOne = (req, res) => {
     .populate('user')
     .exec()
     .then((investee) => {
-      if (investee) {
-        return res.status(200).json({ data: investee });
-      } else {
+      if (!investee) {
         return res.status(404).json({ message: 'Investee not found! ' });
-      }
+      } 
+      return res.status(200).json({ data: investee });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -35,15 +33,13 @@ const investReadOne = (req, res) => {
 
 const investeeCreate = (req, res) => {
   Investee.create({
-    user: user._id,
+    // user: user._id,
     company: req.body.companyName,
     address: req.body.Adress
   })
-    .then((invest) => {
-      return res.status(201).json(invest);
-    })
+    .then((invest) => { return res.status(201).json(invest); })
     .catch((err) => {
-      console.log(`Error creating investee: ${err.message}`);
+      res.status(500).json({ error: err });
     });
 };
 
@@ -60,22 +56,19 @@ const investeeUpdate = (req, res) => {
       address: req.body.Adress,
     },
   })
-    .then((invest) => {return res.status(200).json({ invest });
+    .then((invest) => { return res.status(200).json({ invest });
     })
-    .catch((err) => {
-      console.log(`Error updating investee: ${err.message}`);
-    });
+    .catch((err) => res.status(500).json({ error: err }) );
 };
 
-const investDelete = (req, res, next) => {
+const investDelete = (req, res) => {
   const investid = req.param.id;
   if (!investid) {
     return res.status(404).json({ message: 'Investee not found!' });
   }
   Investee.findByIdAndRemove(investid)
     .then(() => {
-      res.status(200).json({ message: 'successfully deleted the investee' });
-      next();
+      return res.status(200).json({ message: 'successfully deleted the investee' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });

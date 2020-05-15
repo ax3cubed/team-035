@@ -7,10 +7,9 @@ const transactionList = (req, res) => {
     .exec()
     .then((transactions) => {
       if (transactions) {
-        return res.status(200).json(transactions);
-      } else {
         return res.status(404).json({ message: 'transactions not found!' });
-      }
+      } 
+      return res.status(200).json(transactions);
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -21,7 +20,7 @@ const transactionReadOne = (req, res) => {
   const transactionId = req.param.id;
   Transaction.findById(transactionId)
     .populate('businessId')
-    .populate("investorId")
+    .populate('investorId')
     .exec()
     .then((transaction) => {
       if (!transaction) {
@@ -36,13 +35,13 @@ const transactionReadOne = (req, res) => {
 
 const transactionCreate = (req, res) => {
   Transaction.create({
-    businessid: businessId._id,
-    investorid: investorId._id,
+    // businessid: businessId._id,
+    // investorid: investorId._id,
     amount: req.body.amount,
     wallet: req.body.blockchainWallet
   })
-    .then((invest) => {
-      return res.status(201).json(invest);
+    .then((transaction) => { return res.status(201)
+        .json({ data: transaction });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -58,13 +57,12 @@ const transactionUpdate = (req, res) => {
     transactionid,
     $set: {
       amount: req.body.amount,
-      wallet: req.body.blockchainWallet,
-    },
+      wallet: req.body.blockchainWallet
+    }
   })
-    .then((transaction) => {
-      return res.status(200).json({
-        message: 'Updated successfully!',
-        data: transaction,
+    .then((transaction) => { return res.status(200)
+        .json({ message: 'Updated successfully!',
+        data: transaction
       });
     })
     .catch((err) => {
@@ -78,8 +76,8 @@ const transactionDelete = (req, res) => {
     return res.status(404).json({ message: 'transaction not found!' });
   }
   Transaction.findByIdAndRemove(transactionId)
-    .then(() => {
-      return res.status(200).json({ message: 'successfully deleted the transaction' });
+    .then(() => { return res.status(200)
+        .json({ message: 'successfully deleted the transaction' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
