@@ -8,7 +8,7 @@ const milestoneValidationList = (req, res) => {
     .then((milestoneValidations) => {
       if (!milestoneValidations) {
         return res.status(404).json({ message: 'milestoneValidations not found!' });
-      } 
+      }
       return res.status(200).json(milestoneValidations);
     })
     .catch((err) => {
@@ -25,7 +25,7 @@ const milestoneReadOne = (req, res) => {
     .then((milestoneValidation) => {
       if (milestoneValidation) {
         return res.status(404).json({ message: 'milestoneValidation not found!' });
-      } 
+      }
       return res.status(200).json({ data: milestoneValidation });
     })
     .catch((err) => {
@@ -35,16 +35,14 @@ const milestoneReadOne = (req, res) => {
 
 const milestoneValidationCreate = (req, res) => {
   MilestoneValidation.create({
-    userid: validator._id,
-    milestonereportid: milestoneReport._id,
+    // userid: validator._id,
+    // milestonereportid: milestoneReport._id,
     remark: req.body.remark,
     verdict: req.body.verdict
   })
-    .then((validation) => {
-      return res.status(201).json({ data: validation });
-    })
+    .then((validation) => res.status(201).json({ data: validation }))
     .catch((err) => {
-      res.status(500).json({ error: err }) 
+      res.status(500).json({ error: err });
     });
 };
 
@@ -53,20 +51,18 @@ const milestoneValidationUpdate = (req, res) => {
   if (!milestoneValidationid) {
     return res.status(404).json({ message: 'milestoneValidation not found!' });
   }
-  MilestoneValidation.findByIdAndUpdate({
+  return MilestoneValidation.findByIdAndUpdate({
     milestoneValidationid,
     $set: {
       remark: req.body.remark,
       verdict: req.body.verdict
     }
   })
-    .then((milestoneValidation) => { 
-      return res.status(200).json({
-        message: 'Updated successfully!',
-        data: milestoneValidation
-      });
-    })
-    .catch((err) => res.status(400).json({ error: err }) );
+    .then((milestoneValidation) => res.status(200).json({
+      message: 'Updated successfully!',
+      data: milestoneValidation
+    }))
+    .catch((err) => res.status(400).json({ error: err }));
 };
 
 const milestoneValidationDelete = (req, res) => {
@@ -74,12 +70,10 @@ const milestoneValidationDelete = (req, res) => {
   if (!milestoneValidationId) {
     return res.status(404).json({ message: 'milestoneValidation not found!' });
   }
-  MilestoneValidation.findByIdAndRemove(milestoneValidationId)
-    .then(() => {
-      return res
-        .status(200)
-        .json({ message: 'successfully deleted the milestoneValidation' });
-    })
+  return MilestoneValidation.findByIdAndRemove(milestoneValidationId)
+    .then(() => res
+      .status(200)
+      .json({ message: 'successfully deleted the milestoneValidation' }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });

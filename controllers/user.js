@@ -1,4 +1,4 @@
-/*eslint eqeqeq:0*/
+/* eslint eqeqeq:0 */
 const User = require('../models/User');
 
 const userList = (req, res) => {
@@ -7,7 +7,7 @@ const userList = (req, res) => {
     .then((users) => {
       if (!users) {
         return res.status(404).json({ message: 'users not found!' });
-      } 
+      }
       return res.status(200).json({ data: users });
     })
     .catch((err) => {
@@ -22,7 +22,7 @@ const userReadOne = (req, res) => {
     .then((user) => {
       if (!user) {
         return res.status(404).json({ message: 'user not found!' });
-      } 
+      }
       return res.status(200).json({ data: user });
     })
     .catch((err) => {
@@ -38,8 +38,8 @@ const userCreate = (req, res) => {
     account: req.body.accountType,
     password: req.body.password
   })
-    .then((user) => { return res.status(201)
-        .json({ data: user }); })
+    .then((user) => res.status(201)
+      .json({ data: user }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });
@@ -50,7 +50,7 @@ const userUpdate = (req, res) => {
   if (!userid) {
     return res.status(404).json({ message: 'user not found!' });
   }
-  User
+  return User
     .findByIdAndUpdate({
       userid,
       $set: {
@@ -61,11 +61,11 @@ const userUpdate = (req, res) => {
         password: req.body.password
       }
     })
-    .then((user) => { return res.status(200)
-        .json({ message: 'Updated successfully!',
+    .then((user) => res.status(200)
+      .json({
+        message: 'Updated successfully!',
         data: user
-      });
-    })
+      }))
     .catch((err) => {
       res.status(400).json({ error: err });
     });
@@ -76,11 +76,9 @@ const userDelete = (req, res) => {
   if (!userId) {
     return res.status(404).json({ message: 'user not found!' });
   }
-  User
+  return User
     .findByIdAndRemove(userId)
-    .then(() => {
-      return res.status(200).json({ message: 'successfully deleted the user' });
-    })
+    .then(() => res.status(200).json({ message: 'successfully deleted the user' }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });

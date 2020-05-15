@@ -7,7 +7,7 @@ const milestoneReportList = (req, res) => {
     .then((milestoneReports) => {
       if (!milestoneReports) {
         return res.status(404).json({ message: 'milestoneReports not found!' });
-      } 
+      }
       return res.status(200).json(milestoneReports);
     })
     .catch((err) => {
@@ -22,9 +22,9 @@ const milestoneReportReadOne = (req, res) => {
     .exec()
     .then((milestoneReport) => {
       if (!milestoneReport) {
-        return res.status(404).json({ message: 'milestoneReport not found! ' })
-      } 
-      return res.status(200).json({milestoneReport })
+        return res.status(404).json({ message: 'milestoneReport not found! ' });
+      }
+      return res.status(200).json({ milestoneReport });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -34,12 +34,12 @@ const milestoneReportReadOne = (req, res) => {
 
 const milestoneReportCreate = (req, res) => {
   MilestoneReport.create({
-    milestone: milestoneID._id,
+    // milestone: milestoneID._id,
     prof: req.body.prof
   })
-    .then((milestoneReport) => { return res.status(201).json({ data: milestoneReport }); })
+    .then((milestoneReport) => res.status(201).json({ data: milestoneReport }))
     .catch((err) => {
-      res.status(500).json({ error: err }) 
+      res.status(500).json({ error: err });
     });
 };
 
@@ -48,17 +48,16 @@ const milestoneReportUpdate = (req, res) => {
   if (!milestoneReportid) {
     return res.status(404).json({ message: 'milestoneReport not found!' });
   }
-  MilestoneReport.findByIdAndUpdate({
+  return MilestoneReport.findByIdAndUpdate({
     milestoneReportid,
     $set: {
       proof: req.body.proof
     }
   })
-    .then((milestoneReport) => { return res.status(200).json({
-        message: 'Updated successfully!',
-        data: milestoneReport
-      });
-    })
+    .then((milestoneReport) => res.status(200).json({
+      message: 'Updated successfully!',
+      data: milestoneReport
+    }))
     .catch((err) => {
       res.status(400).json({ error: err });
     });
@@ -69,10 +68,9 @@ const milestoneReportDelete = (req, res) => {
   if (!milestoneReportId) {
     return res.status(404).json({ message: 'milestoneReport not found!' });
   }
-  MilestoneReport.findByIdAndRemove(milestoneReportId)
-    .then(() => { return res.status(200)
-        .json({ message: 'successfully deleted the milestoneReport' });
-    })
+  return MilestoneReport.findByIdAndRemove(milestoneReportId)
+    .then(() => res.status(200)
+      .json({ message: 'successfully deleted the milestoneReport' }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });

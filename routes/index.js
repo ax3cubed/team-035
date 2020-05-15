@@ -1,16 +1,16 @@
 const router = require('express').Router();
 
 const auth = require('../middleware/auth');
-const ctrlUser = require('../controller/user');
-const ctrlInvestee = require('../controller/investee');
-const ctrlInvestor = require('../controller/investor');
-const ctrlAuditTrail = require('../controller/auditTrail');
-const ctrlBusiness = require('../controller/business');
-const ctrlMilestone = require('../controller/milestones');
-const ctrlMilestoneReport = require('../controller/milestonesReport');
-const ctrlMilestoneValidation = require('../controller/milestoneValidation');
-const ctrlTransaction = require('../controller/transaction');
-const ctrlSetting = require('../controller/setting');
+const ctrlUser = require('../controllers/user');
+const ctrlInvestee = require('../controllers/investee');
+const ctrlInvestor = require('../controllers/investor');
+const ctrlAuditTrail = require('../controllers/auditTrail');
+const ctrlBusiness = require('../controllers/business');
+const ctrlMilestone = require('../controllers/milestones');
+const ctrlMilestoneReport = require('../controllers/milestonesReport');
+const ctrlMilestoneValidation = require('../controllers/milestoneValidation');
+const ctrlTransaction = require('../controllers/transaction');
+const ctrlSetting = require('../controllers/setting');
 
 router
   .route('invest')

@@ -1,19 +1,18 @@
+
 const Setting = require('../models/settings');
 
 const settingCreate = (req, res) => {
   Setting.create({
-    user: user._id,
+    // user: user._id,
     optionKey: req.body.optionKey,
     value: req.body.value
   })
-    .then((setting) => {
-      return res.status(201).json({
-        message: 'Successfully created!',
-        data: setting
-      });
-    })
+    .then((setting) => res.status(201).json({
+      message: 'Successfully created!',
+      data: setting
+    }))
     .catch((err) => {
-      res.status(500).json({ error: err });      
+      res.status(500).json({ error: err });
     });
 };
 
@@ -22,18 +21,17 @@ const settingUpdate = (req, res) => {
   if (!settingid) {
     return res.status(404).json({ message: 'setting not found!' });
   }
-  Setting.findByIdAndUpdate({
+  return Setting.findByIdAndUpdate({
     settingid,
     $set: {
       optionKey: req.body.optionKey,
       value: req.body.value
     }
   })
-    .then((setting) => { return res.status(200).json({
-        message: 'Updated successfully!',
-        data: setting
-      });
-    })
+    .then((setting) => res.status(200).json({
+      message: 'Updated successfully!',
+      data: setting
+    }))
     .catch((err) => {
       res.status(400).json({ error: err });
     });
@@ -44,10 +42,9 @@ const settingDelete = (req, res) => {
   if (!settingId) {
     return res.status(404).json({ message: 'setting not found!' });
   }
-  Setting.findByIdAndRemove(settingId)
-    .then(() => { return res.status(200)
-        .json({ message: 'successfully deleted the setting' });
-    })
+  return Setting.findByIdAndRemove(settingId)
+    .then(() => res.status(200)
+      .json({ message: 'successfully deleted the setting' }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });

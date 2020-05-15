@@ -7,9 +7,8 @@ const businessList = (req, res) => {
     .then((businesses) => {
       if (!businesses) {
         return res.status(404).json({ message: 'businesss not found!' });
-      } 
+      }
       return res.status(200).json(businesses);
-
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -18,16 +17,15 @@ const businessList = (req, res) => {
 
 const businessReadOne = (req, res) => {
   const businessid = req.param.id;
-  business
+  Business
     .findById(businessid)
     .populate('investId')
     .exec()
     .then((business) => {
       if (business) {
         return res.status(200).json(business);
-      } else {
-        return res.status(404).json({ message: 'business not found! ' });
       }
+      return res.status(404).json({ message: 'business not found! ' });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -35,9 +33,9 @@ const businessReadOne = (req, res) => {
 };
 
 const businessCreate = (req, res) => {
-  business
+  Business
     .create({
-      investid: investeeId._id,
+      // investid: investeeId._id,
       businessTitle: req.body.businessTitle,
       description: req.body.businessDescription,
       category: req.body.businessCategory,
@@ -50,8 +48,7 @@ const businessCreate = (req, res) => {
       deadline: req.body.deadline,
       validated: req.body.validated
     })
-    .then((business) => { return res.status(201).json({ message: 'Created successfully',data: business });
-    })
+    .then((business) => res.status(201).json({ message: 'Created successfully', data: business }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });
@@ -62,7 +59,7 @@ const businessUpdate = (req, res) => {
   if (!businessid) {
     return res.status(404).json({ message: 'Business not found!' });
   }
-  Business
+  return Business
     .findByIdAndUpdate({
       businessid,
       $set: {
@@ -79,9 +76,9 @@ const businessUpdate = (req, res) => {
         validated: req.body.validated
       }
     })
-    .then((business) => { return res.status(200).json({message: 'Update successfully', data: business }); })
+    .then((business) => res.status(200).json({ message: 'Update successfully', data: business }))
     .catch((err) => {
-        res.status(500).json({ error: err }) 
+      res.status(500).json({ error: err });
     });
 };
 
@@ -89,8 +86,7 @@ const businessDelete = (req, res) => {
   const businessid = req.param.id;
   Business
     .findByIdAndRemove(businessid)
-    .then(() => { return res.status(200).json({ message: 'successfully deleted the business' });
-    })
+    .then(() => res.status(200).json({ message: 'successfully deleted the business' }))
     .catch((err) => {
       res.status(500).json({ error: err });
     });
