@@ -7,7 +7,7 @@ const app = express();
 // const usersRouter = require('./routes/users');
 // const contractsRouter = require('./routes/contracts');
 
-const indexRouter = require('./route/index');
+const indexRouter = require('./routes/index');
 
 // Middleware Plugins
 app.use(bodyParser.json()); // allow JSON uploads
