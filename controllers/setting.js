@@ -1,8 +1,13 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
 const Setting = require('../models/settings');
 
 const settingCreate = (req, res) => {
   Setting.create({
-    // user: user._id,
+    user: user._id,
     optionKey: req.body.optionKey,
     value: req.body.value
   })

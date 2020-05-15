@@ -1,3 +1,8 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
 const Investor = require('../models/Investor');
 
 const investorList = (req, res) => {
@@ -6,7 +11,7 @@ const investorList = (req, res) => {
     .exec()
     .then((investors) => {
       if (!investors) {
-        return res.status(404).json({ message: 'investors not found!' });}
+        return res.status(404).json({ message: 'investors not found!' }); }
       return res.status(200).json({ data: investors }); 
     })
     .catch((err) => {
@@ -20,8 +25,7 @@ const investorReadOne = (req, res) => {
     .populate('user')
     .exec()
     .then((investor) => {
-      if (!investor) {
-        return res.status(404).json({ message: 'investor not found! ' });        } 
+      if (!investor) { return res.status(404).json({ message: 'investor not found!' }); } 
       return res.status(200).json({ data: investor });
     })
     .catch((err) => {

@@ -1,3 +1,8 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
 const Transaction = require("../models/transactions");
 
 const transactionList = (req, res) => {
@@ -35,8 +40,8 @@ const transactionReadOne = (req, res) => {
 
 const transactionCreate = (req, res) => {
   Transaction.create({
-    // businessid: businessId._id,
-    // investorid: investorId._id,
+    businessid: businessId._id,
+    investorid: investorId._id,
     amount: req.body.amount,
     wallet: req.body.blockchainWallet
   })

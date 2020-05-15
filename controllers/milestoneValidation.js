@@ -1,3 +1,8 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
 const MilestoneValidation = require('../models/milestoneValidation');
 
 const milestoneValidationList = (req, res) => {
@@ -35,7 +40,7 @@ const milestoneReadOne = (req, res) => {
 
 const milestoneValidationCreate = (req, res) => {
   MilestoneValidation.create({
-    // userid: validator._id,
+    userid: validator._id,
     milestonereportid: milestoneReport._id,
     remark: req.body.remark,
     verdict: req.body.verdict

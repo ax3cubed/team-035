@@ -1,3 +1,8 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
 const Investee = require('../models/investee');
 
 const investList = (req, res,) => {
@@ -33,7 +38,7 @@ const investReadOne = (req, res) => {
 
 const investeeCreate = (req, res) => {
   Investee.create({
-    // user: user._id,
+    user: user._id,
     company: req.body.companyName,
     address: req.body.Adress
   })

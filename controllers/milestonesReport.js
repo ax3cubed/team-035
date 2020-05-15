@@ -1,3 +1,8 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
 const MilestoneReport = require('../models/milestonesReport');
 
 const milestoneReportList = (req, res) => {
@@ -34,7 +39,7 @@ const milestoneReportReadOne = (req, res) => {
 
 const milestoneReportCreate = (req, res) => {
   MilestoneReport.create({
-    // milestone: milestoneID._id,
+    milestone: milestoneID._id,
     prof: req.body.prof
   })
     .then((milestoneReport) => { return res.status(201).json({ data: milestoneReport }); })

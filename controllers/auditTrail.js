@@ -1,3 +1,9 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-trailing-whitespace */
+
 const AuditTrail = require('../models/auditTrail');
 
 const auditTrailList = (req, res) => {
