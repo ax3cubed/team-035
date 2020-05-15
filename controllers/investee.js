@@ -1,8 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable no-trailing-whitespace */
 const Investee = require('../models/investee');
 
 const investList = (req, res,) => {

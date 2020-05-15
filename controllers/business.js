@@ -1,8 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable no-trailing-whitespace */
 const Business = require('../models/business');
 
 const businessList = (req, res) => {
@@ -42,7 +37,7 @@ const businessReadOne = (req, res) => {
 const businessCreate = (req, res) => {
   business
     .create({
-    //   investid: investeeId._id,
+      investid: investeeId._id,
       businessTitle: req.body.businessTitle,
       description: req.body.businessDescription,
       category: req.body.businessCategory,

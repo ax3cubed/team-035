@@ -1,8 +1,4 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable no-trailing-whitespace */
+/*eslint eqeqeq:0*/
 const User = require('../models/User');
 
 const userList = (req, res) => {

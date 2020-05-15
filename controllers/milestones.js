@@ -1,8 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable no-trailing-whitespace */
 const Milestone = require('../models/milestones');
 
 const milestoneList = (req, res) => {

@@ -1,8 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable no-trailing-whitespace */
 const Investor = require('../models/Investor');
 
 const investorList = (req, res) => {
