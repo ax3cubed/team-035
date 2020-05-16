@@ -1,20 +1,31 @@
 /* eslint-disable func-names */
-const mongoose = require('./init');
+const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-const { ObjectId } = Schema.Types;
+const investorSchema = new mongoose.Schema({
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  },
 
-const UserRef = {
-  type: ObjectId, ref: 'User'
-};
+  investmentPreference: {
+    type: String,
+    trim: true
+  },
 
-const InvestorSchema = new Schema({
-  user: { user: UserRef }
+  investmentAccountType: {
+    type: String,
+    trim: true
+  },
+
+  screenName: {
+    type: String,
+    trim: true
+  }
+
+}, {
+  timestamps: true
 });
-InvestorSchema.methods.fullName = function () {
-  return `${this.name}`;
-};
 
-const Investor = mongoose.models.Investor || mongoose.model('Investor', InvestorSchema);
+const Investor = mongoose.model('investor', investorSchema);
 
 module.exports = Investor;
