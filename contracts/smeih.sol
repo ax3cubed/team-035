@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.6.7;
 
 contract smeih {
     struct BusinessData{
@@ -21,18 +21,22 @@ contract smeih {
 
     // Start a new business.
     function start(address recipient, uint256 goal, uint256 deadline) returns (uint id) {
-        var business = businesses[nextCampaignId];
+        var business = businesses[nextBusinessId];
+        if (business.validated ==0)
+            return;
         business.recipient = recipient;
         business.goal = goal;
         business.deadline = deadline;
-        nextCampaignId ++;
-        id = nextCampaignId;
+        nextBusinessId ++;
+        id = nextBusinessId;
     }
 
     // Contribute to the business with id $(businessId).
     function invest(uint256 businessId) {
         var business = businesses[businessId];
         if (business.deadline == 0) // check for non-existing business
+            return;
+        if (business.validated == 0) // check for non-existing business
             return;
         business.contributed += msg.value;
         var investment = business.transactions[business.num_transactions];
